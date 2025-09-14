@@ -11,9 +11,7 @@ const Users = ({ users, loading }) => {
         {users.map((user) => {
           return (
             <UserItem
-              login={user.login}
-              avatar_url={user.avatar_url}
-              html_url={user.html_url}
+              user={user}
               key={user.id}
             />
           );
