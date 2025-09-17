@@ -6,6 +6,11 @@ export default class Search extends Component {
     text: '',
   };
 
+
+  static PropTypes = {
+    searchUsers: PropTypes.func.isRequired
+  }
+
   onChange = (e) => {
     
     // TODO: Note for dev
@@ -18,9 +23,10 @@ export default class Search extends Component {
   };
 
   onSubmit = (e) => {
-    // this 
     e.preventDefault();
-    console.log(this.state.text)
+    console.log(e);
+    this.props.searchUsers(this.state.text);
+    this.setState({});
   }
 
   render() {
