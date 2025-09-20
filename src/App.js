@@ -42,6 +42,9 @@ class App extends Component {
   };
 
   render() {
+
+    const { users, loading } = this.state;
+
     return (
       <div className="App">
         <Navbar />
@@ -49,9 +52,9 @@ class App extends Component {
           <Search
             searchUsers={this.searchUsers}
             clearUser={this.clearUser}
-            showClearButton={this.state.users.length > 0}
+            showClearButton={users.length > 0}
           />
-          <Users loading={this.state.loading} users={this.state.users} />
+          <Users loading={loading} users={users} />
         </div>
       </div>
     );
