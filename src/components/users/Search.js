@@ -9,6 +9,7 @@ export default class Search extends Component {
   static propTypes = {
     searchUsers: PropTypes.func.isRequired,
     clearUser: PropTypes.func.isRequired,
+    showClearButton: PropTypes.bool,
   };
 
   onChange = (e) => {
@@ -24,7 +25,7 @@ export default class Search extends Component {
   onClick = (e) => {
     e.preventDefault();
     this.props.clearUser();
-    this.setState({text: ''});
+    this.setState({ text: '' });
   };
 
   onSubmit = (e) => {
@@ -46,9 +47,10 @@ export default class Search extends Component {
               onChange={this.onChange}
               value={this.state.text}
               className="pr-2"
+              title="Enter user name"
             />
-            {this.state.text !== '' && (
-              <button className="absolute" onClick={this.onClick}>
+            {(this.props.showClearButton || this.state.text !== '') && (
+              <button className="absolute" onClick={this.onClick} title="Clear">
                 <i className="fa-regular fa-circle-xmark"></i>
               </button>
             )}
