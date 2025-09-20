@@ -7,7 +7,7 @@ export default class Search extends Component {
   };
 
 
-  static PropTypes = {
+  static propTypes = {
     searchUsers: PropTypes.func.isRequired
   }
 
