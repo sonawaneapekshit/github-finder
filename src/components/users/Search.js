@@ -6,13 +6,12 @@ export default class Search extends Component {
     text: '',
   };
 
-
   static propTypes = {
-    searchUsers: PropTypes.func.isRequired
-  }
+    searchUsers: PropTypes.func.isRequired,
+    clearUser: PropTypes.func.isRequired,
+  };
 
   onChange = (e) => {
-    
     // TODO: Note for dev
     // for out case to update state we will use this
     // this.setState({ text: e.target.value });
@@ -22,24 +21,38 @@ export default class Search extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  onClick = (e) => {
+    e.preventDefault();
+    this.props.clearUser();
+    this.setState({text: ''});
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
     console.log(e);
     this.props.searchUsers(this.state.text);
     this.setState({});
-  }
+  };
 
   render() {
     return (
       <div>
         <form className="form" onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            name="text"
-            placeholder="Search Users"
-            onChange={this.onChange}
-            value={this.state.text}
-          />
+          <div className="field-wrapper relative">
+            <input
+              type="text"
+              name="text"
+              placeholder="Search Users"
+              onChange={this.onChange}
+              value={this.state.text}
+              className="pr-2"
+            />
+            {this.state.text !== '' && (
+              <button className="absolute" onClick={this.onClick}>
+                <i className="fa-regular fa-circle-xmark"></i>
+              </button>
+            )}
+          </div>
           <input
             type="submit"
             value="Search"
