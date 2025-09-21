@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import axios from 'axios';
 import Search from './components/users/Search';
 import { Alert } from './components/layout/Alert';
+import About from './pages/About';
 class App extends Component {
   state = {
     users: [],
@@ -56,18 +58,33 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Navbar />
-        <div className="container">
-          <Alert alert={this.state.alert} />
-          <Search
-            searchUsers={this.searchUsers}
-            clearUser={this.clearUser}
-            setAlert={this.setAlert}
-          />
-          <Users loading={this.state.loading} users={this.state.users} />
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div className="container">
+            <Alert alert={this.state.alert} />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Fragment>
+                    <Search
+                      searchUsers={this.searchUsers}
+                      clearUser={this.clearUser}
+                      setAlert={this.setAlert}
+                    />
+                    <Users
+                      loading={this.state.loading}
+                      users={this.state.users}
+                    />
+                  </Fragment>
+                }
+              />
+              <Route path='/about' element={<About />} />
+            </Routes>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
