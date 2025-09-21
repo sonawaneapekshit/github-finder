@@ -129,6 +129,9 @@ img {
 .p {
   padding: 0.5rem;
 }
+.p-0 {
+  padding: 0;
+}
 .p-1 {
   padding: 1rem;
 }
@@ -150,10 +153,40 @@ img {
 .py-3 {
   padding: 3rem 0;
 }
+.pr-2 {
+  padding-right: 2rem;
+}
 
+.pl-1 {
+  padding-left: 1rem;
+}
+.pr-1 {
+  padding-right: 1rem;
+}
+.pt-1 {
+  padding-top: 1rem;
+}
+.pb-1 {
+  padding-bottom: 1rem;
+}
 /* Margin */
 .m {
   margin: 0.5rem;
+}
+.m-0 {
+  margin: 0;
+}
+.ml-1 {
+  margin-left: 1rem;
+}
+.mr-1 {
+  margin-right: 1rem;
+}
+.mt-1 {
+  margin-top: 1rem;
+}
+.mb-1 {
+  margin-bottom: 1rem;
 }
 .m-1 {
   margin: 1rem;
@@ -177,6 +210,11 @@ img {
   margin: 3rem 0;
 }
 
+/* border */
+.b-0 {
+  border: none;
+}
+
 /* Grid */
 .grid-2 {
   display: grid;
@@ -194,6 +232,14 @@ img {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
 }
 
 .btn {
@@ -322,6 +368,24 @@ input {
   color: #888;
 }
 
+.field-wrapper input {
+  padding-right: 4rem;
+  height: 2.5rem;
+}
+
+.field-wrapper button.absolute {
+  right: 0;
+  top: 0;
+  background: #a1a1a1;
+  border-radius: 0.25rem 0 0 0.25rem;
+  height: 2.5rem;
+  width: 4rem;
+  padding: 0.25rem;
+  border: none;
+  z-index: 6;
+  cursor: pointer;
+}
+
 input[type='text'],
 input[type='email'],
 input[type='password'],
@@ -378,6 +442,14 @@ table th {
 
 .navbar .welcome span {
   margin-right: 0.6rem;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
 }
 
 /* Mobile Styles */
