@@ -1,70 +1,66 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-export default class Search extends Component {
-  state = {
-    text: '',
-  };
+const Search = ({ searchUsers, setAlert, clearUser }) => {
+  const [text, setText] = useState('');
 
-  static propTypes = {
-    searchUsers: PropTypes.func.isRequired,
-    clearUser: PropTypes.func.isRequired,
-    setAlert: PropTypes.func.isRequired,
-  };
-
-  onChange = (e) => {
+  const onChange = (e) => {
     // TODO: Note for dev
     // for out case to update state we will use this
     // this.setState({ text: e.target.value });
 
     // TODO: Note for dev
     // to make below resuable for all input field
-    this.setState({ [e.target.name]: e.target.value });
+    setText(e.target.value);
   };
 
-  onClick = (e) => {
+  const onClick = (e) => {
     e.preventDefault();
     this.props.clearUser();
-    this.setState({text: ''});
+    setText({ text: '' });
   };
 
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
-    if(this.state.text === "") {
-      this.props.setAlert("Please enter username","minimal")
+    if (this.state.text === '') {
+      setAlert('Please enter username', 'minimal');
     } else {
-      this.props.searchUsers(this.state.text);
-      this.setState({});
+      searchUsers(this.state.text);
+      setText('');
     }
   };
 
-  render() {
-    return (
-      <div>
-        <form className="form" onSubmit={this.onSubmit}>
-          <div className="field-wrapper relative">
-            <input
-              type="text"
-              name="text"
-              placeholder="Search Users"
-              onChange={this.onChange}
-              value={this.state.text}
-              className="pr-2"
-            />
-            {this.state.text !== '' && (
-              <button className="absolute" onClick={this.onClick}>
-                <i className="fa-regular fa-circle-xmark"></i>
-              </button>
-            )}
-          </div>
+  return (
+    <div>
+      <form className="form" onSubmit={onSubmit}>
+        <div className="field-wrapper relative">
           <input
-            type="submit"
-            value="Search"
-            className="btn btn-dark btn-block"
+            type="text"
+            name="text"
+            placeholder="Search Users"
+            onChange={onChange}
+            value={text}
+            className="pr-2"
           />
-        </form>
-      </div>
-    );
-  }
-}
+          {text !== '' && (
+            <button className="absolute" onClick={this.onClick}>
+              <i className="fa-regular fa-circle-xmark"></i>
+            </button>
+          )}
+        </div>
+        <input
+          type="submit"
+          value="Search"
+          className="btn btn-dark btn-block"
+        />
+      </form>
+    </div>
+  );
+};
+
+Search.propTypes = {
+  searchUsers: PropTypes.func.isRequired,
+  clearUser: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
+};
+export default Search;
