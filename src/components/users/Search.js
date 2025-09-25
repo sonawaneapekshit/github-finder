@@ -16,7 +16,7 @@ const Search = ({ searchUsers, setAlert, clearUser }) => {
 
   const onClick = (e) => {
     e.preventDefault();
-    this.props.clearUser();
+    clearUser();
     setText('');
   };
 
