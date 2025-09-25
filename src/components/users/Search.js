@@ -17,15 +17,15 @@ const Search = ({ searchUsers, setAlert, clearUser }) => {
   const onClick = (e) => {
     e.preventDefault();
     this.props.clearUser();
-    setText({ text: '' });
+    setText('');
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (this.state.text === '') {
+    if (text === '') {
       setAlert('Please enter username', 'minimal');
     } else {
-      searchUsers(this.state.text);
+      searchUsers(text);
       setText('');
     }
   };
@@ -43,7 +43,7 @@ const Search = ({ searchUsers, setAlert, clearUser }) => {
             className="pr-2"
           />
           {text !== '' && (
-            <button className="absolute" onClick={this.onClick}>
+            <button className="absolute" onClick={onClick}>
               <i className="fa-regular fa-circle-xmark"></i>
             </button>
           )}
