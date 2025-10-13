@@ -4,7 +4,7 @@ import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import axios from 'axios';
 import Search from './components/users/Search';
-import Alert from './components/layout/Alert';
+import { Alert } from './components/layout/Alert';
 class App extends Component {
   state = {
     users: [],
@@ -44,12 +44,14 @@ class App extends Component {
     }
   };
 
+  // set alert
   setAlert = (msg, type) => {
-    console.log(msg);
-      this.setState({ alert: { msg, type } });
-      setTimeout(()=> {
-        this.setState({ alert: null });
-      }, 5000);
+    console.log(msg, type);
+    this.setState({ alert: { msg: msg, type: type } });
+
+    setTimeout(() => {
+      this.setState({ alert: null });
+    }, 5000);
   };
 
   render() {
