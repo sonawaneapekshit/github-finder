@@ -240,7 +240,7 @@ img {
 }
 
 /* Flex */
-.d-flex {
+.d-flex,
 .flex {
   display: flex;
 }
