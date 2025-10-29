@@ -8,25 +8,27 @@ import Search from './components/users/Search';
 import { Alert } from './components/layout/Alert';
 import About from './pages/About';
 import User from './components/users/User';
-const  App = () => {
-  const [users, setUsers] = useState([])
-  const [user, setUser] = useState({})
-  const [repos, setRepos] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [alert, setAlert] = useState(null)
+import GithubState from './context/github/GithubState';
+
+const App = () => {
+  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState({});
+  const [repos, setRepos] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   // async componentDidMount() {
-    // this.setState({ loading: true });
-    // const res = await axios.get(
-    //   `https://api.github.com/users?
-    //   client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
-    //   &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    // );
-    // this.setState({ users: res.data, loading: false });
-    // console.log(res.data);
+  // this.setState({ loading: true });
+  // const res = await axios.get(
+  //   `https://api.github.com/users?
+  //   client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
+  //   &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+  // );
+  // this.setState({ users: res.data, loading: false });
+  // console.log(res.data);
   // }
 
-const searchUsers = async (text) => {
+  const searchUsers = async (text) => {
     setLoading(true);
 
     const res = await axios.get(
@@ -42,11 +44,11 @@ const searchUsers = async (text) => {
 
   // Get single Github user
   const getUser = async (username) => {
-   setLoading(true);
+    setLoading(true);
 
     const res = await axios.get(
       `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
-      &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`,
     );
 
     setUser(res.data);
@@ -60,7 +62,7 @@ const searchUsers = async (text) => {
 
     const res = await axios.get(
       `https://api.github.com/users/${username}/repos?per_page=5&sort=created&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
-      &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`,
     );
 
     setRepos(res.data);
@@ -77,15 +79,16 @@ const searchUsers = async (text) => {
   };
 
   // set alert
- const setAlertMsg = (msg, type) => {
+  const setAlertMsg = (msg, type) => {
     console.log(msg, type);
-    setAlert( { msg: msg, type: type });
+    setAlert({ msg: msg, type: type });
     setTimeout(() => {
       setAlert({});
     }, 5000);
   };
 
-    return (
+  return (
+    <GithubState>
       <Router>
         <div className="App">
           <Navbar />
@@ -122,7 +125,8 @@ const searchUsers = async (text) => {
           </div>
         </div>
       </Router>
-    );
-}
+    </GithubState>
+  );
+};
 
 export default App;
