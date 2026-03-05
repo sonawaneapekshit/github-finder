@@ -8,10 +8,11 @@ class App extends Component {
     users: [],
     loader: false,
   };
+  
   async componentDidMount() {
     this.setState({ loader: true });
     try {
-      const response = await axios.get('https://api.github.com/users');
+      const response = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
       console.log(response.data);
       setTimeout(() => {
         this.setState({ users: response.data, loader: false });
@@ -20,6 +21,7 @@ class App extends Component {
       console.error(error);
     }
   }
+
   render() {
     return (
       <div className="App">
