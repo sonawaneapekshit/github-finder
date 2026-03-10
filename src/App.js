@@ -49,6 +49,8 @@ class App extends Component {
   // }
 
   render() {
+    const [loader, users] = this.state;
+
     return (
       <div className="App">
         <Navbar title="Github Finder" icon="fa-brands fa-github" />
@@ -56,8 +58,12 @@ class App extends Component {
           className="container"
           style={this.state.loader ? loaderStyles : {}}
         >
-          <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={this.state.users.length > 0 ? true: false} />
-          <Users loader={this.state.loader} users={this.state.users} />
+          <Search
+            searchUsers={this.searchUsers}
+            clearUsers={this.clearUsers}
+            showClear={users.length > 0 ? true : false}
+          />
+          <Users loader={loader} users={users} />
         </div>
       </div>
     );
