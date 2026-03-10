@@ -10,11 +10,13 @@ class App extends Component {
     loader: false,
   };
 
-   // Search github users
-   searchUsers = async (searchText) => {
+  // Search github users
+  searchUsers = async (searchText) => {
     this.setState({ loader: true });
     try {
-      const response = await axios.get(`https://api.github.com/search/users?q=${searchText}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+      const response = await axios.get(
+        `https://api.github.com/search/users?q=${searchText}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`,
+      );
       console.log(response.data);
       setTimeout(() => {
         this.setState({ users: response.data.items, loader: false });
@@ -22,7 +24,15 @@ class App extends Component {
     } catch (error) {
       // console.error(error);
     }
-  }
+  };
+
+  clearUsers = () => {
+    try {
+      this.setState({ users: [] });
+    } catch (error) {
+      // console.error(error);
+    }
+  };
 
   // TODO: UnComment if you want to show inital list of users
   // async componentDidMount() {
@@ -42,8 +52,11 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar title="Github Finder" icon="fa-brands fa-github" />
-        <div className="container" style={this.state.loader ? loaderStyles : {}}>
-          <Search searchUsers={this.searchUsers}/>
+        <div
+          className="container"
+          style={this.state.loader ? loaderStyles : {}}
+        >
+          <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={this.state.users.length > 0 ? true: false} />
           <Users loader={this.state.loader} users={this.state.users} />
         </div>
       </div>

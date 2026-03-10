@@ -1,22 +1,38 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 export class Search extends Component {
   state = {
     searchText: '',
   };
+
+  // Set Search text
   handleOnChange = (e) => {
     this.setState({ searchText: e.target.value });
+  };
+  static propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool,
   };
   // old way or if don;t use arrow function
   /*handleSubmit(e) {
     e.preventDefault();
     console.log(this.state.searchText)
   }*/
+
+  // Search users
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state.searchText);
-    this.props.searchUsers(this.state.searchText)
+    this.props.searchUsers(this.state.searchText);
     this.setState({ searchText: '' });
+  };
+
+  // Clear users
+  handleClear = (e) => {
+    e.preventDefault();
+    this.props.clearUsers({ users: [] });
   };
   render() {
     return (
@@ -32,11 +48,21 @@ export class Search extends Component {
           onChange={this.handleOnChange}
           placeholder="Search User ..."
         />
-        <input
-          type="submit"
-          className="btn btn-dark btn-block"
-          value="Search"
-        />
+        <div className="submit-container">
+          <input
+            type="submit"
+            className="btn btn-dark btn-block"
+            value="Search"
+          />
+          {this.props.showClear && (
+            <input
+              type="reset"
+              className="btn btn-light btn-block"
+              value="Clear"
+              onClick={this.handleClear}
+            />
+          )}
+        </div>
       </form>
     );
   }
