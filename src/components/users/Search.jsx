@@ -30,11 +30,13 @@ export class Search extends Component {
   };
 
   // Clear users
-  handleClear = (e) => {
-    e.preventDefault();
-    this.props.clearUsers({ users: [] });
-  };
+  // handleClear = (e) => {
+  //   e.preventDefault();
+  //   this.props.clearUsers({ users: [] });
+  // };
   render() {
+    const [showClear, clearUsers] = this.props;
+
     return (
       /* 
       if we don't use arrow function then use below bind syntax otherwise will get error of this keyword
@@ -54,12 +56,12 @@ export class Search extends Component {
             className="btn btn-dark btn-block"
             value="Search"
           />
-          {this.props.showClear && (
+          {showClear && (
             <input
               type="reset"
               className="btn btn-light btn-block"
               value="Clear"
-              onClick={this.handleClear}
+              onClick={clearUsers}
             />
           )}
         </div>
