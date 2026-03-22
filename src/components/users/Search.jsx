@@ -13,7 +13,8 @@ export class Search extends Component {
   static propTypes = {
     searchUsers: PropTypes.func.isRequired,
     clearUsers: PropTypes.func.isRequired,
-    showClear: PropTypes.bool,
+    showClear: PropTypes.bool.isRequired,
+    setAlert: PropTypes.func.isRequired,
   };
   // old way or if don;t use arrow function
   /*handleSubmit(e) {
@@ -24,9 +25,13 @@ export class Search extends Component {
   // Search users
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.searchText);
-    this.props.searchUsers(this.state.searchText);
-    this.setState({ searchText: '' });
+    if(this.state.searchText === "") {
+      this.props.setAlert("Please enter something", "light");
+    } else {
+      console.log(this.state.searchText);
+      this.props.searchUsers(this.state.searchText);
+      this.setState({ searchText: '' });
+    }
   };
 
   // Clear users
@@ -35,7 +40,7 @@ export class Search extends Component {
   //   this.props.clearUsers({ users: [] });
   // };
   render() {
-    const [showClear, clearUsers] = this.props;
+    const {showClear, clearUsers} = this.props;
 
     return (
       /* 

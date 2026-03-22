@@ -1,17 +1,16 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
-export const Alert = ({alert}) => {
+const Alert = ({ alert }) => {
+  console.log(alert);
+  if (alert === null) {
+    return '';
+  }
   return (
-   alert !== null && <div className={`alert alert-${alert.type} flex align-center`}>
-      <i className="fa-solid fa-circle-exclamation"></i>
-      <p className='ml-1'>{alert.msg}</p>
+    <div className={`alert alert-${alert.type}`}>
+      <i className='fas fa-info-circle'></i>
+      <p>{alert.msg}</p>
     </div>
   );
-};
-
-Alert.propTypes = {
-  alertState: PropTypes.object,
 };
 
 export default Alert;

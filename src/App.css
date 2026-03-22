@@ -267,6 +267,10 @@ body {
   opacity: 0.9;
   background: var(--light-color);
   color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  border-radius: 0.45rem;
 }
 
 .btn-primary,
@@ -334,6 +338,14 @@ body {
 /* Forms */
 input {
   margin: 1.2rem 0;
+}
+
+.MuiDataGrid-headerFilterRow .MuiDataGrid-columnHeader .MuiInputBase-root {
+  margin-bottom: 0;
+}
+
+.MuiDataGrid-headerFilterRow .MuiDataGrid-columnHeader input {
+  margin: 0;
 }
 
 .form-text {

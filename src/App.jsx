@@ -4,10 +4,13 @@ import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import axios from 'axios';
 import Search from './components/users/Search';
+import Alert from './components/layout/Alert';
+
 class App extends Component {
   state = {
     users: [],
     loader: false,
+    alert: null,
   };
 
   // Search github users
@@ -26,12 +29,21 @@ class App extends Component {
     }
   };
 
+  // clear github users list
   clearUsers = () => {
     try {
       this.setState({ users: [] });
     } catch (error) {
       // console.error(error);
     }
+  };
+
+  // show alert message
+  setAlert = (msg, type) => {
+    this.setState({ alert: { msg, type } });
+    setTimeout(()=> {
+       this.setState({ alert: null });
+    }, 3000)
   };
 
   // TODO: UnComment if you want to show inital list of users
@@ -49,8 +61,8 @@ class App extends Component {
   // }
 
   render() {
-    const [loader, users] = this.state;
-
+    const { loader, users, alert } = this.state;
+    console.log(alert);
     return (
       <div className="App">
         <Navbar title="Github Finder" icon="fa-brands fa-github" />
@@ -58,10 +70,12 @@ class App extends Component {
           className="container"
           style={this.state.loader ? loaderStyles : {}}
         >
+          <Alert alert={alert} />
           <Search
             searchUsers={this.searchUsers}
             clearUsers={this.clearUsers}
             showClear={users.length > 0 ? true : false}
+            setAlert={this.setAlert}
           />
           <Users loader={loader} users={users} />
         </div>
