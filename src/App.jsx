@@ -7,10 +7,13 @@ import axios from 'axios';
 import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import About from './pages/About';
+import User from './components/users/User';
+import UserWrapper from './components/users/UserWrapperClassComponent';
 
 class App extends Component {
   state = {
     users: [],
+    singleUser: {},
     loader: false,
     alert: null,
   };
@@ -25,6 +28,23 @@ class App extends Component {
       console.log(response.data);
       setTimeout(() => {
         this.setState({ users: response.data.items, loader: false });
+      }, 1000);
+    } catch (error) {
+      // console.error(error);
+    }
+  };
+
+  // get github user
+  getSingleUser = async (login) => {
+    console.log(login, '@@@');
+    this.setState({ loader: true });
+    try {
+      const response = await axios.get(
+        `https://api.github.com/users/${login}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`,
+      );
+      setTimeout(() => {
+        this.setState({ singleUser: response.data, loader: false });
+        console.log(response.data);
       }, 1000);
     } catch (error) {
       // console.error(error);
@@ -63,7 +83,7 @@ class App extends Component {
   // }
 
   render() {
-    const { loader, users, alert } = this.state;
+    const { loader, users, alert, singleUser } = this.state;
     console.log(alert);
     return (
       <Router>
@@ -90,7 +110,18 @@ class App extends Component {
                   </Fragment>
                 }
               />
-              <Route path="/about" element={<About/>} />
+              <Route path="/about" element={<About />} />
+              <Route
+                path="/users/:login"
+                element={
+                  <UserWrapper
+                    getSingleUser={this.getSingleUser}
+                    user={singleUser}
+                    loader={loader}
+                    singleUser={singleUser}
+                  />
+                }
+              />
             </Routes>
           </div>
         </div>

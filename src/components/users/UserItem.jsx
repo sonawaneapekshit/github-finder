@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom';
 // converting this component from class to functional component as it is stateless
 const UserItem = ({singleUser: {avatar_url, html_url, login }}) => {
   // constructor() {
@@ -30,9 +31,9 @@ const UserItem = ({singleUser: {avatar_url, html_url, login }}) => {
       />
       <h3>{login}</h3>
       <div>
-        <a href={html_url} className="btn btn-dark btn-sm my-1">
+        <Link to={`/users/${login}`} className="btn btn-dark btn-sm my-1">
           More
-        </a>
+        </Link>
       </div>
     </div>
   );
