@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Fragment, Component } from 'react';
+import Spinner from '../layout/Spinner';
+import { Link } from 'react-router-dom';
 
 export default class User extends Component {
   _isMounted = false;
@@ -8,7 +10,7 @@ export default class User extends Component {
     this._isMounted = true;
     const login = this.props.params?.login;
     console.log('Mounting with login:', login);
-    
+
     if (login) {
       this.props.getSingleUser(login);
     }
@@ -44,24 +46,129 @@ export default class User extends Component {
   };
 
   render() {
-    const { loader, user } = this.props;
-    console.log('User render - loader:', loader, 'has user:', !!user);
+    const {
+      name,
+      avatar_url,
+      location,
+      bio,
+      blog,
+      login,
+      html_url,
+      company,
+      twitter_username,
+      followers,
+      public_repos,
+      public_gists,
+      hireable,
+    } = this.props.singleUser;
+
+    const { loader } = this.props;
 
     if (loader) {
-      return <div className="loading">Loading user profile...</div>;
+      return <Spinner />;
     }
 
     return (
-      <div className="user-profile">
-        <h1>User profile</h1>``
-        {this.props.singleUser && (
-          <div>
-            <img src={this.props.singleUser.avatar_url} alt={this.props.singleUser.name} style={{ width: 100 }} />
-            <h2>{this.props.singleUser.name || this.props.singleUser.login}</h2>
-            {this.props.singleUser.bio && <p>{this.props.singleUser.bio}</p>}
+      <section
+        style={{
+          color: 'rgba(228, 228, 228, 0.77)',
+          background: 'rgba(0,0,0,0.35)',
+          padding: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+        }}
+      >
+        <Link to="/" className="btn btn-light" style={{ maxWidth: '150px' }}>
+          Back to Search
+        </Link>
+        <p>
+          Hireable:
+          {hireable ? (
+            <i className="fas fa-check text-success"></i>
+          ) : (
+            <i className="fas fa-times-circle text-danger"></i>
+          )}
+        </p>
+        <div className="card grid-2">
+          <div className="all-center">
+            <img
+              className="round-img"
+              src={avatar_url}
+              alt={`${name || login} avatar`}
+              style={{ width: '150px' }}
+            />
+            <h1 tirle={name || login}>{name || login}</h1>
+            <p>
+              <i class="fa-solid fa-location-dot"></i>Location:
+              {location || 'N/A'}
+            </p>
           </div>
-        )}
-      </div>
+          <div style={{ gap: '1rem' }}>
+            {bio && (
+              <Fragment>
+                <h3 id="bio-user">Bio</h3>
+                <p style={{}} aria-labelledby="bio-user" aria-description={bio}>
+                  {bio}
+                </p>
+              </Fragment>
+            )}
+            {html_url && (
+              <Fragment>
+                <h3>Repo link</h3>
+                <ul>
+                  <li>
+                    <a
+                      href={html_url}
+                      title={`${name || login} github profile`}
+                    >
+                      <i
+                        class="fa-brands fa-github text-dark "
+                        style={{ fontSize: '40px' }}
+                      ></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={`https://twitter.com/${twitter_username}`}
+                      title={`${twitter_username} twiiter profile`}
+                    >
+                      <i
+                        class="fa-brands fa-twitter text-dark "
+                        style={{ fontSize: '40px' }}
+                      ></i>
+                    </a>
+                  </li>
+                </ul>
+                
+                <ul>
+                  {login && (
+                    <li>
+                      <Fragment>
+                        <strong>Username</strong>: {login}
+                      </Fragment>
+                    </li>
+                  )}
+                  {company && (
+                    <li>
+                      <Fragment>
+                        <strong>Company</strong>: {company}
+                      </Fragment>
+                    </li>
+                  )}
+                  {blog && (
+                    <li>
+                      <Fragment>
+                        <strong>Blog</strong>: {blog}
+                      </Fragment>
+                    </li>
+                  )}
+                </ul>
+              </Fragment>
+            )}
+          </div>
+        </div>
+      </section>
     );
   }
 }
