@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import axios from 'axios';
 import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
+import About from './pages/About';
 
 class App extends Component {
   state = {
@@ -41,9 +43,9 @@ class App extends Component {
   // show alert message
   setAlert = (msg, type) => {
     this.setState({ alert: { msg, type } });
-    setTimeout(()=> {
-       this.setState({ alert: null });
-    }, 3000)
+    setTimeout(() => {
+      this.setState({ alert: null });
+    }, 3000);
   };
 
   // TODO: UnComment if you want to show inital list of users
@@ -64,22 +66,35 @@ class App extends Component {
     const { loader, users, alert } = this.state;
     console.log(alert);
     return (
-      <div className="App">
-        <Navbar title="Github Finder" icon="fa-brands fa-github" />
-        <div
-          className="container"
-          style={this.state.loader ? loaderStyles : {}}
-        >
-          <Alert alert={alert} />
-          <Search
-            searchUsers={this.searchUsers}
-            clearUsers={this.clearUsers}
-            showClear={users.length > 0 ? true : false}
-            setAlert={this.setAlert}
-          />
-          <Users loader={loader} users={users} />
+      <Router>
+        <div className="App">
+          <Navbar title="Github Finder" icon="fa-brands fa-github" />
+          <div
+            className="container"
+            style={this.state.loader ? loaderStyles : {}}
+          >
+            <Alert alert={alert} />
+            <Routes>
+              {/* Home route */}
+              <Route
+                path="/"
+                element={
+                  <Fragment>
+                    <Search
+                      searchUsers={this.searchUsers}
+                      clearUsers={this.clearUsers}
+                      showClear={users.length > 0 ? true : false}
+                      setAlert={this.setAlert}
+                    />
+                    <Users loader={loader} users={users} />
+                  </Fragment>
+                }
+              />
+              <Route path="/about" element={<About/>} />
+            </Routes>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
