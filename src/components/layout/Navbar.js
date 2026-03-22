@@ -1,23 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 // import { Link } from 'react-router-dom';
 
-const Navbar = ({ title= 'Github Profile',
-  icon= 'fa-brands fa-square-github' }) => {
-
+const Navbar = ({
+  title = 'Github Profile',
+  icon = 'fa-brands fa-square-github',
+}) => {
   return (
     <nav className="navbar bg-primary">
       <h1>
         <i className={icon}></i> {title}
       </h1>
-      {/* <ul>
+      <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" viewTransition>
+            Home
+          </Link>
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <Link to="/about" viewTransition>
+            About us
+          </Link>
         </li>
-      </ul> */}
+      </ul>
     </nav>
   );
 };
