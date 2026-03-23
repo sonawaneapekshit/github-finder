@@ -16,6 +16,7 @@ class App extends Component {
     singleUser: {},
     loader: false,
     alert: null,
+    repos: [],
   };
 
   // Search github users
@@ -44,6 +45,23 @@ class App extends Component {
       );
       setTimeout(() => {
         this.setState({ singleUser: response.data, loader: false });
+        console.log(response.data);
+      }, 1000);
+    } catch (error) {
+      // console.error(error);
+    }
+  };
+
+  // get github user
+  getSingleUserRepos = async (login) => {
+    console.log(login, '@@@');
+    this.setState({ loader: true });
+    try {
+      const response = await axios.get(
+        `https://api.github.com/users/${login}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`,
+      );
+      setTimeout(() => {
+        this.setState({ repos: response.data, loader: false });
         console.log(response.data);
       }, 1000);
     } catch (error) {
@@ -83,7 +101,7 @@ class App extends Component {
   // }
 
   render() {
-    const { loader, users, alert, singleUser } = this.state;
+    const { loader, users, alert, singleUser, repos } = this.state;
     console.log(alert);
     return (
       <Router>
@@ -119,6 +137,8 @@ class App extends Component {
                     user={singleUser}
                     loader={loader}
                     singleUser={singleUser}
+                    getSingleUserRepos={this.getSingleUserRepos}
+                    repos={repos}
                   />
                 }
               />

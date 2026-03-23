@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
+import Repos from '../repos/Repos';
 
 export default class User extends Component {
   _isMounted = false;
@@ -13,6 +14,7 @@ export default class User extends Component {
 
     if (login) {
       this.props.getSingleUser(login);
+      this.props.getSingleUserRepos(login)
     }
   }
 
@@ -39,7 +41,9 @@ export default class User extends Component {
   static propTypes = {
     loader: PropTypes.bool,
     getSingleUser: PropTypes.func.isRequired, // Make it required
+    getSingleUserRepos: PropTypes.func.isRequired, // Make it required
     singleUser: PropTypes.object,
+    repos: PropTypes.any,
     params: PropTypes.shape({
       login: PropTypes.string,
     }),
@@ -57,6 +61,7 @@ export default class User extends Component {
       company,
       twitter_username,
       followers,
+      folllowing,
       public_repos,
       public_gists,
       hireable,
@@ -116,7 +121,9 @@ export default class User extends Component {
             {html_url && (
               <Fragment>
                 <h3>Repo link</h3>
-                <ul>
+                <ul
+                  style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
+                >
                   <li>
                     <a
                       href={html_url}
@@ -140,7 +147,7 @@ export default class User extends Component {
                     </a>
                   </li>
                 </ul>
-                
+
                 <ul>
                   {login && (
                     <li>
@@ -167,6 +174,15 @@ export default class User extends Component {
               </Fragment>
             )}
           </div>
+        </div>
+        <div className="card text-center">
+          <div className="badge badge-primary">Followers: {followers}</div>
+          <div className="badge badge-success">Following: {folllowing}</div>
+          <div className="badge badge-light">Public Repos: {public_repos}</div>
+          <div className="badge badge-dark">Public Gists: {public_gists}</div>
+        </div>
+        <div className="card text-center" style={{display: "flex", gap: "1rem", flexWrap: "wrap"}}>
+            <Repos repos={this.props.repos} />
         </div>
       </section>
     );
